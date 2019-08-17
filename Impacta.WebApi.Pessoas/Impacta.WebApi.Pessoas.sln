@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Impacta.WebApi.Pessoas", "Impacta.WebApi.Pessoas\Impacta.WebApi.Pessoas.csproj", "{46089872-8350-4E1B-ADCB-6C33F1A0D153}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46089872-8350-4E1B-ADCB-6C33F1A0D153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46089872-8350-4E1B-ADCB-6C33F1A0D153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46089872-8350-4E1B-ADCB-6C33F1A0D153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46089872-8350-4E1B-ADCB-6C33F1A0D153}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FC47CD9-3C82-4B9B-B1E3-716CAC595486}
+	EndGlobalSection
+EndGlobal
