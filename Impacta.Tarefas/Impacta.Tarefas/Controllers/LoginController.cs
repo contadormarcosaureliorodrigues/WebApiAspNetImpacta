@@ -9,7 +9,7 @@ using System.Web.Security;
 
 namespace Impacta.Tarefas.Controllers
 {
-	[Authorize]
+
     public class LoginController : Controller
     {
         // GET: Login
@@ -20,7 +20,8 @@ namespace Impacta.Tarefas.Controllers
             return View(usuario);
 
         }
-
+		//[Authorize]
+		[HttpPost]
 		public ActionResult AutenticarLogin(Usuario usuario)
 		{
 			//segundo parametro é relatiovo ao cookie,
@@ -36,7 +37,7 @@ namespace Impacta.Tarefas.Controllers
 			FormsAuthentication.SignOut();
 
 			//retorna para a View Login
-			return View("AutenticarLogin");
+			return View("Autenticacao");
 		}
     }
 }

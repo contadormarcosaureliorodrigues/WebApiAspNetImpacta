@@ -12,6 +12,7 @@ namespace Impacta.Tarefas.Controllers
 	
     public class RealBooksController : Controller
     {
+		//[Autorize] estando no escopo da clase todos os métodos serão aplicados nesse comportamento
         // GET: RealBooks
         public ActionResult Index()
         {
@@ -43,6 +44,7 @@ namespace Impacta.Tarefas.Controllers
 			return View(lst);
         }
 
+		[Authorize]
         // GET: RealBooks/Create
         public ActionResult Create()
         {
