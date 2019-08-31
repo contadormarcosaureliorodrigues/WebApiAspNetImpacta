@@ -1,0 +1,38 @@
+﻿@model Impacta.MOD.Usario
+
+@{
+    ViewBag.Title = "Formulario";
+}
+
+@if (ViewBag.Mensagem != null)
+{
+    <h2>@ViewBag.Mensagem</h2>
+}
+
+
+<h2>Formulario de Autenticação</h2>
+
+
+@using (Html.BeginForm("Entrar", "Autenticador", FormMethod.Post, new { @class = "form-group" }))
+{
+    @*@Html.AntiForgeryToken()*@
+    <fildset>
+        <legend>Login com Sessão</legend>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username)
+            @Html.EditorFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+
+        </div>
+        <div>
+            @Html.LabelFor(model => model.Password)
+            @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Password" })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-success">Autenticar Login</button>
+    </fildset>
+}
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
