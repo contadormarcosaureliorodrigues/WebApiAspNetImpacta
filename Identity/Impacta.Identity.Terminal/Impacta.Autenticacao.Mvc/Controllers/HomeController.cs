@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 
 namespace Impacta.Autenticacao.Mvc.Controllers
 {
@@ -23,6 +24,7 @@ namespace Impacta.Autenticacao.Mvc.Controllers
 			return View();
 		}
 
+		[Authorize]
 		public ActionResult AreaRestrita()
 		{
 			ViewBag.Message = "Você está na área Restrita";
@@ -44,7 +46,7 @@ namespace Impacta.Autenticacao.Mvc.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CriarLogin(Usuario)
+		public ActionResult CriarLogin(Usuario usuario)
 		{
 			//Chamar metodo salvar Usuario
 			bool resultado = SalvarUsuario(usuario);
@@ -59,7 +61,7 @@ namespace Impacta.Autenticacao.Mvc.Controllers
 
 		}
 
-		private bool SalvarUsuario(object usuario)
+		private bool SalvarUsuario(Usuario usuario)
 		{
 			bool retorno = false;
 			//Obter a UserStore, UserManager
@@ -67,8 +69,8 @@ namespace Impacta.Autenticacao.Mvc.Controllers
 			var usuarioGerenciador = new UserManager<IdentityUser>(usuarioStore);
 
 			//Criar uma Identidade
-			var usuarioInfo = 
-				new IdentityUser() { UserName, usuario.UserName };
+			var usuarioInfo =
+				new IdentityUser() { UserName = usuario.UserName };
 			//Gravar
 			IdentityResult resultado =
 			usuarioGerenciador.Create(usuarioInfo , usuario.Password);
@@ -81,11 +83,64 @@ namespace Impacta.Autenticacao.Mvc.Controllers
 				var identidadeUsuario =
 					usuarioGerenciador.CreateIdentity(usuarioInfo,
 						DefaultAuthenticationTypes.ApplicationCookie);
-				gerenciadorDeAutenticacao.SignIn( new Microsoft.Owin.Security.AuthenticationProperties())
+
+				gerenciadorDeAutenticacao.SignIn( new AuthenticationProperties() { },
+				identidadeUsuario);
+
+
+				retorno = true;
+			}
+			else
+			{
+				retorno = false;
+			}
+			return retorno;
+			;
+		}
+
+		[HttpPost]
+		public ActionResult LoginView(Usuario usuario)
+		{
+			if (AutenticarUsuario(usuario))
+			{
+				return View("AreaRestrita");
 
 			}
+			else
+			{
+				return View("Inicio");
+			}
 
-			;
+		}
+
+		private bool AutenticarUsuario(Usuario usuario)
+		{
+			bool retorno = false;
+			var usuarioStore = new UserStore<IdentityUser>();
+			var usuarioGerenciador = new UserManager<IdentityUser>(usuarioStore);
+
+			var usuarioIdentidade = usuarioGerenciador.Find(usuario.UserName, usuario.Password);
+
+			if (usuarioIdentidade !=null)
+			{
+				var gerenciadorDeAutenticacao = HttpContext.GetOwinContext().Authentication;
+
+				var identidade = usuarioGerenciador.CreateIdentity(usuarioIdentidade,
+				DefaultAuthenticationTypes.ApplicationCookie);
+				gerenciadorDeAutenticacao.SignIn(
+					new AuthenticationProperties()
+					{ IsPersistent = false },
+					identidade);
+				retorno = true;
+			}
+			else
+			{
+				ViewBag.MensagemErro = "Usuario ou senha Invalida.";
+
+				retorno = false;
+			}
+			return retorno;
+
 		}
 	}
 }
